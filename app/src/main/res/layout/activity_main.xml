@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     >
 
-    <!--<com.orangelittle.orange.BackGroundView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
+    <com.dick.ecgdemo.BackGroundView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
     <com.dick.ecgdemo.EcgView
         android:id="@+id/electrocardiogram"
         android:layout_width="match_parent"

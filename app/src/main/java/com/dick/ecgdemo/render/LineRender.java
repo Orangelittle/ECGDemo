@@ -40,20 +40,8 @@ public class LineRender {
             List<Entry> list=line.getEntryList();
             int size = list.size();
             if (line.isBezierCurve()) {
-                //是否是平滑曲线图
-                List<ControlPoint> controlPoints1 = ControlPoint.getControlPointList(list);
-                for (int i=0; i<controlPoints1.size(); i++){
-                    if (i == 0){
-                        mPath.moveTo(list.get(i).getX(),list.get(i).getY());
-                    }
-                    //画三价贝塞尔曲线
-                    mPath.cubicTo(
-                            controlPoints1.get(i).getConPoint1().x,controlPoints1.get(i).getConPoint1().y,
-                            controlPoints1.get(i).getConPoint2().x,controlPoints1.get(i).getConPoint2().y,
-                            list.get(i+1).getX(), list.get(i+1).getY()
-                    );
-                }
-                canvas.drawPath(mPath,linePaint);
+                drawBezierCurve(canvas, list);
+
             }else{
                 //绘制折线图
                 for (int i = 0; i < size; i++) {
@@ -68,26 +56,59 @@ public class LineRender {
                 canvas.drawPath(mPath,linePaint);
             }
 
-
             // TODO: 2017/9/4 填充
             if (line.isFill()) {
-                Entry max = list.get(size - 1);
-                fillPaint=new Paint();
-                fillPaint.setStyle(Paint.Style.FILL);
-                fillPaint.setAlpha(50);
-                fillPaint.setColor(line.getFillColor());
-
-                mPath.lineTo(max.getX(),150);
-                mPath.lineTo(0,150);
-                mPath.close();
-
-                canvas.drawPath(mPath,fillPaint);
+                fillColor(canvas, line, list);
             }
 
 
 
         }
 
+    }
+
+    /**
+     * 填充路径颜色
+     * @param canvas
+     * @param line
+     * @param list
+     */
+
+    public void fillColor(Canvas canvas, Line line, List<Entry> list) {
+        int size=list.size();
+        Entry max = list.get(size - 1);
+        fillPaint=new Paint();
+        fillPaint.setStyle(Paint.Style.FILL);
+        fillPaint.setAlpha(50);
+        fillPaint.setColor(line.getFillColor());
+
+        mPath.lineTo(max.getX(),0);
+        mPath.lineTo(0,0);
+        mPath.close();
+
+        canvas.drawPath(mPath,fillPaint);
+    }
+
+    /**
+     * 绘制平滑曲线图
+     * @param canvas
+     * @param list
+     */
+    public void drawBezierCurve(Canvas canvas, List<Entry> list) {
+        //是否是平滑曲线图
+        List<ControlPoint> controlPoints1 = ControlPoint.getControlPointList(list);
+        for (int i=0; i<controlPoints1.size(); i++){
+            if (i == 0){
+                mPath.moveTo(list.get(i).getX(),list.get(i).getY());
+            }
+            //画三价贝塞尔曲线
+            mPath.cubicTo(
+                    controlPoints1.get(i).getConPoint1().x,controlPoints1.get(i).getConPoint1().y,
+                    controlPoints1.get(i).getConPoint2().x,controlPoints1.get(i).getConPoint2().y,
+                    list.get(i+1).getX(), list.get(i+1).getY()
+            );
+        }
+        canvas.drawPath(mPath,linePaint);
     }
 
     public Lines getmLines() {

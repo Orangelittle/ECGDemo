@@ -42,26 +42,36 @@ public class BackGroundView extends View {
     private PathEffect effect=new DashPathEffect(new float[]{1,5},1);
     private int paintColor= Color.parseColor("#0a7b14");
     private void drawGrid(Canvas canvas){
-        canvas.drawColor(Color.BLACK);
+//        canvas.drawColor(Color.BLACK);
         //横线
         for (int i = 0; i < grid_hori; i++) {
+            Paint mPaint=new Paint();
+            Path mPath=new Path();
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setColor(paintColor);
+
 
             mPath.moveTo(0,grid_gap*i+(height-grid_hori*grid_gap)/2);
             mPath.lineTo(width,grid_gap*i+(height-grid_hori*grid_gap)/2);
             if(i%5!=0){//画虚线
-                mPaint.setPathEffect(effect);
+                mPaint.setPathEffect(new DashPathEffect(new float[]{1,5},1));
             }
             canvas.drawPath(mPath,mPaint);
         }
         //竖线
         for (int i = 0; i < grid_ver; i++) {
-
+            Paint mPaint=new Paint();
+            Path mPath=new Path();
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setColor(paintColor);
+            mPaint.setStrokeWidth(1);
             mPath.moveTo(grid_gap*i+(width-grid_ver*grid_gap)/2,0);
             mPath.lineTo(grid_gap*i+(width-grid_ver*grid_gap)/2,height);
             if(i%5!=0){//画虚线
-                mPaint.setPathEffect(effect);
+                mPaint.setPathEffect(new DashPathEffect(new float[]{1,5},1));
             }
             canvas.drawPath(mPath,mPaint);
+//            mPaint.reset();
         }
     }
 
@@ -140,7 +150,7 @@ public class BackGroundView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(Color.BLACK);
-        drawBackground(canvas);
-//        drawGrid(canvas);
+//        drawBackground(canvas);
+        drawGrid(canvas);
     }
 }
