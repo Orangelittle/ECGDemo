@@ -40,7 +40,7 @@ public class LineRender {
             List<Entry> list=line.getEntryList();
             int size = list.size();
             if (line.isBezierCurve()) {
-                drawBezierCurve(canvas, list);
+                drawBezierCurve(canvas, mPath,linePaint,list);
 
             }else{
                 //绘制折线图
@@ -94,7 +94,7 @@ public class LineRender {
      * @param canvas
      * @param list
      */
-    public void drawBezierCurve(Canvas canvas, List<Entry> list) {
+    public void drawBezierCurve(Canvas canvas, Path mPath, Paint linePaint, List<Entry> list) {
         //是否是平滑曲线图
         List<ControlPoint> controlPoints1 = ControlPoint.getControlPointList(list);
         for (int i=0; i<controlPoints1.size(); i++){

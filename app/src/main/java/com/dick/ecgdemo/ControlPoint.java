@@ -53,12 +53,23 @@ public class ControlPoint {
         for (int i=0; i<pointFs.size()-1;i++){
 
             if (i == 0){
-                //第一断1曲线 控制点
-                conP1x = pointFs.get(i).getX() + (pointFs.get(i + 1).getX()-pointFs.get(i).getX())/4;
-                conP1y = pointFs.get(i).getY() + (pointFs.get(i + 1).getY()-pointFs.get(i).getY())/4;
+                if(pointFs.size()<3){
+                    conP1x = pointFs.get(i).getX() + (pointFs.get(i + 1).getX() - pointFs.get(i).getX()) / 4;
+                    conP1y = pointFs.get(i).getY() + (pointFs.get(i + 1).getY() - pointFs.get(i).getY()) / 4;
 
-                conP2x = pointFs.get(i+1).getX() - (pointFs.get(i + 2).getX() - pointFs.get(i).getX())/4;
-                conP2y = pointFs.get(i+1).getY() - (pointFs.get(i + 2).getY() - pointFs.get(i).getY())/4;
+                    conP2x = pointFs.get(i + 1).getX() - (pointFs.get(i ).getX() - pointFs.get(i).getX()) / 4;
+                    conP2y = pointFs.get(i + 1).getY() - (pointFs.get(i ).getY() - pointFs.get(i).getY()) / 4;
+                }else {
+
+
+                    //第一断1曲线 控制点
+                    conP1x = pointFs.get(i).getX() + (pointFs.get(i + 1).getX() - pointFs.get(i).getX()) / 4;
+                    conP1y = pointFs.get(i).getY() + (pointFs.get(i + 1).getY() - pointFs.get(i).getY()) / 4;
+
+                    conP2x = pointFs.get(i + 1).getX() - (pointFs.get(i + 2).getX() - pointFs.get(i).getX()) / 4;
+                    conP2y = pointFs.get(i + 1).getY() - (pointFs.get(i + 2).getY() - pointFs.get(i).getY()) / 4;
+
+                }
 
             }else if (i == pointFs.size() - 2){
                 //最后一段曲线 控制点

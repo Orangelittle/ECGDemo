@@ -258,46 +258,26 @@ public class EcgView extends View {
     Path mPath=new Path();
 
 
-    Paint h=new Paint();
-
 
     public void drawECG(Canvas canvas) {
-
-        h.setStyle(Paint.Style.STROKE);
-        h.setColor(Color.BLUE);
-        h.setTextSize(30);
         if (!isOver) {//只绘制一屏数据
 
-            int size = mListPoint.size();
-            for (int i = 0; i < size; i++) {
-                if (i==0){
-                    mPath.moveTo(mListPoint.get(i).getX(),mListPoint.get(i).getY());
-//                    canvas.restore();
-//
-//                    canvas.scale(1,1);
-//                    canvas.drawText(""+i,mListPoint.get(i).getX(),mListPoint.get(i).getY(),h);
-                }else {
-                    mPath.lineTo(mListPoint.get(i).getX(),mListPoint.get(i).getY());
-//                    canvas.restore();
-//
-//
-//                    canvas.scale(1,1);
-//                    canvas.drawText(""+i,mListPoint.get(i).getX(),mListPoint.get(i).getY(),h);
-                }
-            }
+//            int size = mListPoint.size();
+//            for (int i = 0; i < size; i++) {
+//                if (i==0){
+//                    mPath.moveTo(mListPoint.get(i).getX(),mListPoint.get(i).getY());
+//                }else {
+//                    mPath.lineTo(mListPoint.get(i).getX(),mListPoint.get(i).getY());
+//                }
+//            }
+//            canvas.drawPath(mPath,_PaintLine);
+//            mPath.reset();
 
-            canvas.drawPath(mPath,_PaintLine);
+            lineRender.drawBezierCurve(canvas,mPath,_PaintLine,mListPoint);
             mPath.reset();
-//            canvas.restore();
-//
-//
-//            canvas.scale(1,1);
-//            canvas.drawText("dfdfdfdfd",width/2,height/2,h);
-
         } else {//绘制全部数据
 
             if (mPoint.size() != 0) {
-
                 int size = mPoint.size();
                 offset_x_max = width - size * _XUnitLength;//确定X轴滑动最大偏移量
                 lineRender.setmLines(lines);
@@ -311,7 +291,7 @@ public class EcgView extends View {
 
     }
 
-    private boolean isOver;
+    private boolean isOver;//是否停止采集
 
     private Lines lines;
 
